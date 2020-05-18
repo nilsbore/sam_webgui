@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 2.8.3)
 project(sam_webgui)
 
+if (DEFINED ENV{EMSDK})
+
 set(CMAKE_C_COMPILER emcc)
 set(CMAKE_CXX_COMPILER em++)
 
@@ -71,3 +73,10 @@ set_target_properties(sam_webgui_test PROPERTIES OUTPUT_NAME "webgui.js")
 
 target_link_libraries(sam_webgui roswasm_webgui roswasm -lGL -lwebsocket.js)
 target_link_libraries(sam_webgui_test sam_webgui roswasm_webgui roswasm -lGL -lwebsocket.js)
+
+else() # no emsdk
+
+find_package(catkin REQUIRED COMPONENTS roscpp roscpp_json_serialize std_msgs sensor_msgs geometry_msgs nav_msgs) # rosmon_msgs)
+catkin_package()
+
+endif()
