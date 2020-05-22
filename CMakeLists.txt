@@ -3,9 +3,6 @@ project(sam_webgui)
 
 if (DEFINED ENV{EMSDK})
 
-set(CMAKE_C_COMPILER emcc)
-set(CMAKE_CXX_COMPILER em++)
-
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
@@ -19,12 +16,15 @@ catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES sam_webgui
 #  CATKIN_DEPENDS other_catkin_pkg
-#  DEPENDS system_lib
+#  DEPENDS roswasm_webgui
 )
 
 ###########
 ## Build ##
 ###########
+
+set(CMAKE_C_COMPILER "$ENV{EMSDK}/upstream/emscripten/emcc")
+set(CMAKE_CXX_COMPILER "$ENV{EMSDK}/upstream/emscripten/em++")
 
 # setting EMSCRIPTEN_GENERATE_BITCODE_STATIC_LIBRARIES=ON here does not
 # work, since it will only be taken into account on the next cmake
@@ -71,8 +71,8 @@ add_library(sam_webgui STATIC src/roswasm_sam.cpp)
 add_executable(sam_webgui_test src/main.cpp)
 set_target_properties(sam_webgui_test PROPERTIES OUTPUT_NAME "webgui.js")
 
-target_link_libraries(sam_webgui roswasm_webgui roswasm -lGL -lwebsocket.js)
-target_link_libraries(sam_webgui_test sam_webgui roswasm_webgui roswasm -lGL -lwebsocket.js)
+target_link_libraries(sam_webgui ${roswasm_webgui_LIBRARIES} ${roswasm_LIBRARIES} -lGL -lwebsocket.js)
+target_link_libraries(sam_webgui_test sam_webgui ${roswasm_webgui_LIBRARIES} ${roswasm_LIBRARIES} -lGL -lwebsocket.js)
 
 else() # no emsdk
 
