@@ -21,6 +21,7 @@ where `1.2.3.4` should be replaced by the IP of the machine that the interface w
 ## Dependencies when developing
 
 * [Emscripten](https://emscripten.org/docs/getting_started/downloads.html) tested with version `1.39.10` but latest should do
+* [roswasm_suite](https://github.com/nilsbore/roswasm_suite): clone in catkin workspace with `git clone https://github.com/nilsbore/roswasm_suite.git`
 * [rosbridge_suite](https://github.com/RobotWebTools/rosbridge_suite) after [the commit adding cbor-raw compression](https://github.com/RobotWebTools/rosbridge_suite/commit/dc7fcb282d1326d573abe83579cc7d989ae71739), latest `develop` should do:
   ```bash
   git clone https://github.com/RobotWebTools/rosbridge_suite -b develop # in workspace src folder
