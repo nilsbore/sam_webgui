@@ -30,7 +30,8 @@ include_directories(
   ${catkin_INCLUDE_DIRS}
 )
 
-add_library(sam_webgui STATIC src/roswasm_sam.cpp)
+#add_library(sam_webgui STATIC src/roswasm_sam.cpp)
+add_library(sam_webgui src/roswasm_sam.cpp)
 
 add_executable(sam_webgui_test src/main.cpp)
 set_target_properties(sam_webgui_test PROPERTIES OUTPUT_NAME "webgui.js")

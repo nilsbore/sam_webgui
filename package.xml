@@ -41,6 +41,8 @@
   <build_depend>geometry_msgs</build_depend>
   <build_depend>sensor_msgs</build_depend>
   <build_depend>nav_msgs</build_depend>
+  <build_depend>roswasm</build_depend>
+  <build_depend>roswasm_webgui</build_depend>
   <!-- <build_depend>rosmon_msgs</build_depend> -->
   <exec_depend>roscpp</exec_depend>
   <!-- <exec_depend>roswasm_webgui</exec_depend> -->
