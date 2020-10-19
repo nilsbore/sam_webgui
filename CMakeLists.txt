@@ -41,6 +41,31 @@ target_link_libraries(sam_webgui_test sam_webgui ${roswasm_webgui_LIBRARIES} ${r
 
 configure_file(www/webgui.html ${CATKIN_DEVEL_PREFIX}/${CATKIN_PACKAGE_BIN_DESTINATION}/webgui.html COPYONLY)
 
+#############
+## Install ##
+#############
+
+# all install targets should use catkin DESTINATION variables
+# See http://ros.org/doc/api/catkin/html/adv_user_guide/variables.html
+
+## Mark executable scripts (Python etc.) for installation
+## in contrast to setup.py, you can choose the destination
+install(PROGRAMS www/webgui.html ${CATKIN_DEVEL_PREFIX}/${CATKIN_PACKAGE_BIN_DESTINATION}/webgui.wasm
+  DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+)
+
+## Mark executables for installation
+## See http://docs.ros.org/melodic/api/catkin/html/howto/format1/building_executables.html
+install(TARGETS sam_webgui_test
+  RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+)
+
+## Mark other files for installation (e.g. launch and bag files, etc.)
+install(DIRECTORY launch/
+  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}/launch
+  PATTERN ".svn" EXCLUDE
+)
+
 else() # no emsdk
 
 find_package(catkin REQUIRED COMPONENTS roscpp roscpp_json_serialize std_msgs sensor_msgs geometry_msgs nav_msgs) # rosmon_msgs)
