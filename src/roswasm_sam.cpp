@@ -168,7 +168,6 @@ void SamActuatorWidget::pub_callback(const ros::TimerEvent& e)
 
 void SamActuatorWidget::show_window(bool& show_actuator_window)
 {
-    ImGui::SetNextWindowSize(ImVec2(500, 478), ImGuiCond_FirstUseEver);
     ImGui::Begin("Actuator controls", &show_actuator_window);
 
     if (ImGui::CollapsingHeader("Thruster Angles", ImGuiTreeNodeFlags_Framed | ImGuiTreeNodeFlags_DefaultOpen)) {
@@ -266,7 +265,6 @@ SamDashboardWidget::SamDashboardWidget(roswasm::NodeHandle& nh) : was_leak(false
 
 void SamDashboardWidget::show_window(bool& show_dashboard_window)
 {
-    ImGui::SetNextWindowSize(ImVec2(500, 243), ImGuiCond_FirstUseEver);
     ImGui::Begin("Status dashboard", &show_dashboard_window);
 
     if (ImGui::CollapsingHeader("Critical Info", ImGuiTreeNodeFlags_Framed | ImGuiTreeNodeFlags_DefaultOpen)) {
