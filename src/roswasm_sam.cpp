@@ -154,7 +154,7 @@ SamActuatorWidget::SamActuatorWidget(roswasm::NodeHandle& nh) : rpm_pub_enabled(
     tcg_control_enable = new TopicWidget<std_msgs::Bool>(nh, &draw_bool, "ctrl/tcg/pid_enable");
     tcg_control_setpoint = new TopicWidget<std_msgs::Float64>(nh, DrawFloat64(-1.6, 1.6), "ctrl/tcg/setpoint"); //, -1.6, 1.6)
 
-    pub_timer = nh.createTimer(ros::Duration(0.08), std::bind(&SamActuatorWidget::pub_callback, this, std::placeholders::_1));
+    pub_timer = nh.createTimer(roswasm::Duration(0.08), std::bind(&SamActuatorWidget::pub_callback, this, std::placeholders::_1));
     pub_timer.stop();
 }
 
@@ -334,7 +334,7 @@ SamTeleopWidget::SamTeleopWidget(roswasm::NodeHandle& nh) : enabled(false) //, p
     angle_pub = nh.advertise<sam_msgs::ThrusterAngles>("core/thrust_vector_cmd", 1000);
     rpm1_pub = nh.advertise<smarc_msgs::ThrusterRPM>("core/thruster1_cmd", 1000);
     rpm2_pub = nh.advertise<smarc_msgs::ThrusterRPM>("core/thruster2_cmd", 1000);
-    pub_timer = nh.createTimer(ros::Duration(0.08), std::bind(&SamTeleopWidget::pub_callback, this, std::placeholders::_1));
+    pub_timer = nh.createTimer(roswasm::Duration(0.08), std::bind(&SamTeleopWidget::pub_callback, this, std::placeholders::_1));
     pub_timer.stop();
 }
 
