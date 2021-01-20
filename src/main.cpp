@@ -58,6 +58,7 @@ EM_JS(void, resizeCanvas, (), {
 void loop()
 {
     if (glfwWindowShouldClose(g_window)) {
+        roswasm::shutdown();
         return;
     }
 
