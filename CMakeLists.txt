@@ -26,6 +26,7 @@ catkin_package(
 ###########
 
 if (${ROSWASM_NATIVE})
+set(SAM_WEBGUI_LIB sam_webgui_native)
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/")
 #set(OpenGL_GL_PREFERENCE "GLVND")
 find_package(GLEW REQUIRED)
@@ -33,6 +34,8 @@ find_package(OpenGL REQUIRED)
 find_package(glfw3 REQUIRED)
 find_package(SDL2 REQUIRED) 
 find_package(SDL2_image REQUIRED)
+else()
+set(SAM_WEBGUI_LIB sam_webgui)
 endif()
 
 ## Specify additional locations of header files
@@ -52,17 +55,17 @@ include_directories(
 endif()
 
 #add_library(sam_webgui STATIC src/roswasm_sam.cpp)
-add_library(sam_webgui src/roswasm_sam.cpp)
+add_library(${SAM_WEBGUI_LIB} src/roswasm_sam.cpp)
 add_executable(sam_webgui_test src/main.cpp)
 
 if (NOT ${ROSWASM_NATIVE})
 set_target_properties(sam_webgui_test PROPERTIES OUTPUT_NAME "webgui.js")
 configure_file(www/webgui.html ${CATKIN_DEVEL_PREFIX}/${CATKIN_PACKAGE_BIN_DESTINATION}/webgui.html COPYONLY)
-target_link_libraries(sam_webgui ${roswasm_webgui_LIBRARIES} ${roswasm_LIBRARIES})
-target_link_libraries(sam_webgui_test sam_webgui ${roswasm_webgui_LIBRARIES} ${roswasm_LIBRARIES})
+target_link_libraries(${SAM_WEBGUI_LIB} ${roswasm_webgui_LIBRARIES} ${roswasm_LIBRARIES})
+target_link_libraries(sam_webgui_test ${SAM_WEBGUI_LIB} ${roswasm_webgui_LIBRARIES} ${roswasm_LIBRARIES})
 else()
-target_link_libraries(sam_webgui ${catkin_LIBRARIES} ${SDL2_LIBRARY} ${SDL2_IMAGE_LIBRARIES} ${OPENGL_gl_LIBRARY} ${GLEW_LIBRARIES} glfw)
-target_link_libraries(sam_webgui_test sam_webgui ${catkin_LIBRARIES} ${SDL2_LIBRARY} ${SDL2_IMAGE_LIBRARIES} ${OPENGL_gl_LIBRARY} ${GLEW_LIBRARIES} glfw)
+target_link_libraries(${SAM_WEBGUI_LIB} ${catkin_LIBRARIES} ${SDL2_LIBRARY} ${SDL2_IMAGE_LIBRARIES} ${OPENGL_gl_LIBRARY} ${GLEW_LIBRARIES} glfw)
+target_link_libraries(sam_webgui_test ${SAM_WEBGUI_LIB} ${catkin_LIBRARIES} ${SDL2_LIBRARY} ${SDL2_IMAGE_LIBRARIES} ${OPENGL_gl_LIBRARY} ${GLEW_LIBRARIES} glfw)
 endif()
 
 #############
@@ -88,7 +91,7 @@ install(TARGETS sam_webgui_test
 
 ## Mark libraries for installation
 ## See http://docs.ros.org/melodic/api/catkin/html/howto/format1/building_libraries.html
-install(TARGETS sam_webgui
+install(TARGETS ${SAM_WEBGUI_LIB}
   ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
   LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
   RUNTIME DESTINATION ${CATKIN_GLOBAL_BIN_DESTINATION}
